@@ -305,21 +305,15 @@ namespace SRMCore
 		{
 			using namespace ModData;
 
-			auto* player = RE::PlayerCharacter::GetSingleton();
-			if (!player) return;
-
-			auto* newRace = player->GetRace();
-			if (!newRace) return;
-
 			if (auto* werewolfQuest = TESdataHandler->LookupForm(0x4B2D9, "Skyrim.esm")) {
 				if (auto scriptObj = PapyrusUtils::GetObject(werewolfQuest, "companionshousekeepingscript")) {
-					PapyrusUtils::SetProperty(scriptObj, "PlayerOriginalRace", newRace);
+					PapyrusUtils::SetProperty<RE::TESRace*>(scriptObj, "PlayerOriginalRace", nullptr);
 				}
 			}
 
 			if (auto* vampireQuest = TESdataHandler->LookupForm(0x71D2, "Dawnguard.esm")) {
 				if (auto scriptObj = PapyrusUtils::GetObject(vampireQuest, "DLC1VampireTrackingQuest")) {
-					PapyrusUtils::SetProperty(scriptObj, "playerRace", newRace);
+					PapyrusUtils::SetProperty<RE::TESRace*>(scriptObj, "playerRace", nullptr);
 				}
 			}
 		}
